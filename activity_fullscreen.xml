@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:theme="@style/ThemeOverlay.Tim_sport.FullscreenContainer"
+    tools:context=".FullscreenActivity">
+
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/start" />
+
+    <LinearLayout
+        android:id="@+id/intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fullscreen_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="LOADING   ЗАГРУЗКА"
+            android:textColor="#0E0E0E"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/clock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            app:srcCompat="@drawable/hour1" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:fitsSystemWindows="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="@style/Widget.Theme.Tim_sport.ActionBar.Fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0B0A0A"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Sport 24/7 Спорт"
+            android:textColor="#FBFAFA"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick1"
+                android:text="Футбол" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick2"
+                android:text="Баскетбол"
+                app:backgroundTint="#085873" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick3"
+                android:text="Кнопка"
+                app:backgroundTint="#041701" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick4"
+                android:text="Ещё кнопка"
+                app:backgroundTint="#600303" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Автор: Олег Тимерманис"
+            android:textColor="#F8F6F6"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0B0A0A"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/dynamic_scr"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:background="#D5D3D3"
+            android:orientation="horizontal">
+
+            <ScrollView
+                android:id="@+id/rules_f"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ECEAEA"
+                android:fadeScrollbars="false"
+                android:fillViewport="false"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbarThumbVertical="@color/white"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/text_rules"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="rules"
+                    android:textColor="#0C0C0C"
+                    android:textSize="18sp" />
+            </ScrollView>
+
+            <ScrollView
+                android:id="@+id/f_pl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fadeScrollbars="false"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbarThumbVertical="@color/white"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/lin_f_pl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#101010"
+                android:onClick="onClick5"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/rules" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#0B0B0B"
+                android:onClick="onClick6"
+                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#0B0A0A"
+                android:onClick="onClick7"
+                app:srcCompat="@android:drawable/ic_menu_crop" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#0C0C0C"
+                android:onClick="onClick8"
+                app:srcCompat="@android:drawable/ic_menu_revert" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
