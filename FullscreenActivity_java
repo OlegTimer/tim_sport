@@ -1,0 +1,603 @@
+package com.olegtimermanis.tim_sport;
+
+import android.annotation.SuppressLint;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+/**
+ * An example full-screen activity that shows and hides the system UI (i.e.
+ * status bar and navigation/system bar) with user interaction.
+ */
+public class FullscreenActivity extends AppCompatActivity {
+    public int sportselect  = 0;
+    private int clockspeed  = 300;
+    private int clockdelay  = 3000;
+
+    public static final String rules_f = "Правила игры в футбол (англ. Laws of the Game; дословно: «правила игры») — регламент, определяющий порядок игры в футбол, согласно которому проходят соревнования. Первый футбольный матч, сыгранный по этим правилам, провели члены Кембриджского университета в 1848 году в Паркерс Пис, Кембридж. 26 октября 1863 года Футбольная ассоциация Англии официально утвердила эти правила. Современный вариант правил разработан Международным советом футбольных ассоциаций и опубликован ФИФА (Международной федерацией футбола). Правила игры в футбол регламентируют такие вопросы как количество игроков, продолжительность матча, размеры поля, требования к футбольному мячу, типы нарушений правил и други. Система видеоповторов была включена в правила в 2018 году. \n" +
+            "Последняя редакция правил состоит из 17 пунктов.\n" +
+            "    Правило 1: Поле для игры\n" +
+            "    Правило 2: Мяч\n" +
+            "    Правило 3: Игроки\n" +
+            "    Правило 4: Экипировка игроков\n" +
+            "    Правило 5: Судья\n" +
+            "    Правило 6: Другие официальные лица матча\n" +
+            "    Правило 7: Продолжительность игры\n" +
+            "    Правило 8: Начало и возобновление игры\n" +
+            "    Правило 9: Мяч в игре и не в игре.\n" +
+            "Мяч не в игре, когда он полностью пересёк линию ворот или боковую линию — по земле или по воздуху или игра была остановлена судьёй. В течение всего остального времени мяч в игре, включая случаи, когда он отскакивает от стойки ворот, перекладины или углового флагштока и остается в поле, а также когда он отскакивает от судьи или от помощника судьи, находящихся в пределах поля.\n" +
+            "    Правило 10: Определение результата матча\n" +
+            "    Правило 11: Вне игры\n" +
+            "    Правило 12: Нарушения Правил и недисциплинированное поведение\n" +
+            "    Правило 13: Штрафной/свободный удар\n" +
+            "    Правило 14: 11-метровый удар (пенальти)\n" +
+            "    Правило 15: Вбрасывание мяча\n" +
+            "    Правило 16: Удар от ворот\n" +
+            "    Правило 17: Угловой удар";
+
+    public static final String rules_b = "Правила баскетболa — это правила и положения, регулирующие игру, судейство, оборудование и методику её проведения. Хотя правила во многом одинаковы во всём мире, некоторые их аспекты варьируются. Большинство лиг или руководящих органов в Северной Америке, в частности НБА и NCАА, формируют собственные правила. Для международных игр и игр на других континентах применяются правила, определенные технической комиссией ФИБА. \n" +
+            "15 января 1892 года Джеймс Нейсмит опубликовал правила для игры «Basket Ball» (дословно с английского: корзина-мяч), которые придумал он сам: первоначально игра, подчинявшаяся данным правилам, сильно отличалась от того баскетбола, который мы знаем сейчас, так как тогда не было ведения, забивания сверху, трёхочковых бросков или таймера, а также правила не запрещали мешать попаданию.\n" +
+            "    Мяч может быть брошен в любом направлении одной или двумя руками.\n" +
+            "    Мяч может быть отбит в любом направлении одной или двумя руками.\n" +
+            "    Игрок не может бежать с мячом. Игрок должен бросить мяч с того места, где он его поймал, с допущением броска, когда игрок получает мяч на хорошей скорости и пытается остановиться.\n" +
+            "    Мяч нужно держать кистями рук; нельзя использовать руки или тело для удержания мяча.\n" +
+            "    Нельзя никоим образом толкать, бить, держать, опрокидывать и подрезать оппонента. Первое нарушение этого правила любым игроком должно считаться фолом; после второго нарушения игрок удаляется с площадки до следующего забитого мяча или, если была очевидная попытка травмирования оппонента, до конца игры. Замена запрещается.\n" +
+            "    Удар по мячу кулаком является фолом, так как нарушает третье и четвертое правила, и наказывается тем же способом, который описан в пункте 5.\n" +
+            "    Если одна из команд совершает три последовательных фола, не прерываемых при этом фолами противника, то это считается забитым противником голом.\n" +
+            "    Забитым мячом считается мяч, когда он брошен или отбит с земли в корзину и не выпал, если защитники не касались мяча и не мешали попаданию. Если мяч покоится на краях, и защитник двигает корзину, это считается забитым мячом.\n" +
+            "    Когда мяч выходит за пределы площадки, он должен быть вброшен или отбит в игровое поле первым коснувшимся игроком. В случае спора арбитр должен вбросить мяч прямо в площадку. На вброс мяча игроку дается пять секунд. Если он держит мяч дольше, мяч отдается оппоненту. Если одна из сторон продолжает задерживать игру, то арбитр засчитывает ей фол.\n" +
+            "    Арбитр должен следить за игроками, отмечать фолы и уведомлять судей, когда случаются три последовательных фола. Он вправе удалять игроков в соответствии с правилом 5.\n" +
+            "    Судья должен следить за мячом и решать, когда мяч находится в игре, в стадии вбрасывания, чья сторона им владеет, и должен следить за временем. Он должен определять, когда команда забивает мяч и вести счёт, исполняя также любые другие процессуальные обязанности.\n" +
+            "    Игра должна длиться два тайма по пятнадцать минут с пятиминутным перерывом между ними.\n" +
+            "    Победившей считается команда, забившая большее количество очков.";
+    /**
+     * Whether or not the system UI should be auto-hidden after
+     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
+     */
+    private static final boolean AUTO_HIDE = true;
+
+    /**
+     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
+     * user interaction before hiding the system UI.
+     */
+    private static final int AUTO_HIDE_DELAY_MILLIS = 350;
+
+    /**
+     * Some older devices needs a small delay between UI widget updates
+     * and a change of the status and navigation bar.
+     */
+    private static final int UI_ANIMATION_DELAY = 500;
+    private final Handler mHideHandler = new Handler();
+    private View mContentView;
+    private final Runnable mHidePart2Runnable = new Runnable() {
+        @SuppressLint("InlinedApi")
+        @Override
+        public void run() {
+            // Delayed removal of status and navigation bar
+
+            // Note that some of these constants are new as of API 16 (Jelly Bean)
+            // and API 19 (KitKat). It is safe to use them, as they are inlined
+            // at compile-time and do nothing on earlier devices.
+            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        }
+    };
+    private View mControlsView;
+    private final Runnable mShowPart2Runnable = new Runnable() {
+        @Override
+        public void run() {
+            // Delayed display of UI elements
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.show();
+            }
+            mControlsView.setVisibility(View.VISIBLE);
+        }
+    };
+    private boolean mVisible;
+    private final Runnable mHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hide();
+        }
+    };
+    /**
+     * Touch listener to use for in-layout UI controls to delay hiding the
+     * system UI. This is to prevent the jarring behavior of controls going away
+     * while interacting with activity UI.
+     */
+    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (AUTO_HIDE) {
+                        delayedHide(AUTO_HIDE_DELAY_MILLIS);
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    view.performClick();
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_fullscreen);
+
+        mVisible = true;
+        mControlsView = findViewById(R.id.fullscreen_content_controls);
+        mContentView = findViewById(R.id.fullscreen_content);
+
+        tictac();
+
+        Handler handler = new Handler();
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {//do smth start
+                        openmenu();
+                    }//do smth end
+                });
+            }
+        }, clockdelay);//
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        // Trigger the initial hide() shortly after the activity has been
+        // created, to briefly hint to the user that UI controls
+        // are available.
+        delayedHide(100);
+    }
+
+    private void toggle() {
+        if (mVisible) {
+            hide();
+        } else {
+            show();
+        }
+    }
+
+    private void hide() {
+        // Hide UI first
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+        mControlsView.setVisibility(View.GONE);
+        mVisible = false;
+
+        // Schedule a runnable to remove the status and navigation bar after a delay
+        mHideHandler.removeCallbacks(mShowPart2Runnable);
+        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+    }
+
+    private void show() {
+        // Show the system bar
+        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        mVisible = true;
+
+        // Schedule a runnable to display UI elements after a delay
+        mHideHandler.removeCallbacks(mHidePart2Runnable);
+        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
+    }
+
+    /**
+     * Schedules a call to hide() in delay milliseconds, canceling any
+     * previously scheduled calls.
+     */
+    private void delayedHide(int delayMillis) {
+        mHideHandler.removeCallbacks(mHideRunnable);
+        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    private void tictac() {
+            if(sportselect == 0) {
+                ImageView imageView = findViewById(R.id.clock);
+                imageView.invalidate();
+                imageView.setImageResource(R.drawable.hour1);
+
+                Handler handler = new Handler();
+                Timer t = new Timer();
+                t.schedule(new TimerTask() {
+                    public void run() {
+                        handler.post(new Runnable() {
+                            public void run() {//do smth start
+                                tictac2();
+                            }//do smth end
+                        });
+                    }
+                }, clockspeed);//
+            }
+    }
+
+    private void tictac2() {
+        if(sportselect == 0) {
+        ImageView imageView = findViewById(R.id.clock);
+        imageView.invalidate();
+        imageView.setImageResource(R.drawable.hour2);
+
+        Handler handler2 = new Handler();
+        Timer t2 = new Timer();
+        t2.schedule(new TimerTask() {
+            public void run() {
+                handler2.post(new Runnable() {
+                    public void run() {//do smth start
+                        tictac();
+                    }//do smth end
+                });
+            }
+        }, clockspeed);//
+    }
+    }
+
+    private void  openmenu(){
+        sportselect = 777;
+
+        View bz2 = findViewById(R.id.menu);
+       bz2.setVisibility(View.VISIBLE);
+    }
+
+    public void onClick1(View view) {
+        sportselect = 1;
+        mainrun();
+    }
+
+    public void onClick2(View view) {
+        sportselect = 2;
+        mainrun();
+    }
+
+    public void onClick3(View view) {
+        Toast.makeText(this, "Спорт!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClick4(View view) {
+        Toast.makeText(this, "Ещё спорт!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClick5(View view) {//rules
+        allclose();
+
+            View bz3 = findViewById(R.id.rules_f);
+            bz3.setVisibility(View.VISIBLE);
+    }
+
+    public void onClick6(View view) {//players
+        allclose();
+        LinearLayout layout = (LinearLayout) findViewById(R.id.lin_f_pl);
+        layout.removeAllViews();
+        if (sportselect == 1){
+
+                TextView textView = new TextView(this);
+                textView.setText("Пеле, футбол");
+                ImageView imageView = new ImageView(this);
+                imageView.setImageResource(R.drawable.pele);
+                layout.addView(textView);
+                layout.addView(imageView);
+
+            TextView textView2 = new TextView(this);
+            textView2.setText("Марко Ван Бастен, футбол");
+            ImageView imageView2 = new ImageView(this);
+            imageView2.setImageResource(R.drawable.marco);
+            layout.addView(textView2);
+            layout.addView(imageView2);
+
+            TextView textView3 = new TextView(this);
+            textView3.setText("Франц Беккенбауэр, футбол");
+            ImageView imageView3 = new ImageView(this);
+            imageView3.setImageResource(R.drawable.franz);
+            layout.addView(textView3);
+            layout.addView(imageView3);
+
+            TextView textView4 = new TextView(this);
+            textView4.setText("Йохан Кройф, футбол");
+            ImageView imageView4 = new ImageView(this);
+            imageView4.setImageResource(R.drawable.kroif);
+            layout.addView(textView4);
+            layout.addView(imageView4);
+
+            TextView textView5 = new TextView(this);
+            textView5.setText("Криштиану Роналду, футбол");
+            ImageView imageView5 = new ImageView(this);
+            imageView5.setImageResource(R.drawable.ronald);
+            layout.addView(textView5);
+            layout.addView(imageView5);
+
+            TextView textView6 = new TextView(this);
+            textView6.setText("Лионель Месси, футбол");
+            ImageView imageView6 = new ImageView(this);
+            imageView6.setImageResource(R.drawable.messi);
+            layout.addView(textView6);
+            layout.addView(imageView6);
+
+            TextView textView7 = new TextView(this);
+            textView7.setText("Диего Марадона, футбол");
+            ImageView imageView7 = new ImageView(this);
+            imageView7.setImageResource(R.drawable.mara);
+            layout.addView(textView7);
+            layout.addView(imageView7);
+
+            TextView textView8 = new TextView(this);
+            textView8.setText("Джанлуиджи Буффон, футбол");
+            ImageView imageView8 = new ImageView(this);
+            imageView8.setImageResource(R.drawable.buff);
+            layout.addView(textView8);
+            layout.addView(imageView8);
+
+            TextView textView9 = new TextView(this);
+            textView9.setText("Роналдо, футбол");
+            ImageView imageView9 = new ImageView(this);
+            imageView9.setImageResource(R.drawable.ron);
+            layout.addView(textView9);
+            layout.addView(imageView9);
+
+            TextView textView10 = new TextView(this);
+            textView10.setText("Зинедин Зидан, футбол");
+            ImageView imageView10 = new ImageView(this);
+            imageView10.setImageResource(R.drawable.zin);
+            layout.addView(textView10);
+            layout.addView(imageView10);
+
+        }
+
+        if (sportselect == 2){
+
+            TextView textView = new TextView(this);
+            textView.setText("Карим Абдул-Джаббар, баскетбол");
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.drawable.kamil);
+            layout.addView(textView);
+            layout.addView(imageView);
+
+            TextView textView2 = new TextView(this);
+            textView2.setText("Майкл Джордан, баскетбол");
+            ImageView imageView2 = new ImageView(this);
+            imageView2.setImageResource(R.drawable.jord);
+            layout.addView(textView2);
+            layout.addView(imageView2);
+
+            TextView textView3 = new TextView(this);
+            textView3.setText("Уилт Чемберлен, баскетбол");
+            ImageView imageView3 = new ImageView(this);
+            imageView3.setImageResource(R.drawable.wilt);
+            layout.addView(textView3);
+            layout.addView(imageView3);
+
+            TextView textView4 = new TextView(this);
+            textView4.setText("Билл Расселл, баскетбол");
+            ImageView imageView4 = new ImageView(this);
+            imageView4.setImageResource(R.drawable.bill);
+            layout.addView(textView4);
+            layout.addView(imageView4);
+
+            TextView textView5 = new TextView(this);
+            textView5.setText("Джон Стоктон, баскетбол");
+            ImageView imageView5 = new ImageView(this);
+            imageView5.setImageResource(R.drawable.stock);
+            layout.addView(textView5);
+            layout.addView(imageView5);
+
+            TextView textView6 = new TextView(this);
+            textView6.setText("Карл Мэлоун, баскетбол");
+            ImageView imageView6 = new ImageView(this);
+            imageView6.setImageResource(R.drawable.mal);
+            layout.addView(textView6);
+            layout.addView(imageView6);
+
+            TextView textView7 = new TextView(this);
+            textView7.setText("Оскар Робертсон, баскетбол");
+            ImageView imageView7 = new ImageView(this);
+            imageView7.setImageResource(R.drawable.robert);
+            layout.addView(textView7);
+            layout.addView(imageView7);
+
+            TextView textView8 = new TextView(this);
+            textView8.setText("Коби Брайант, баскетбол");
+            ImageView imageView8 = new ImageView(this);
+            imageView8.setImageResource(R.drawable.kobi);
+            layout.addView(textView8);
+            layout.addView(imageView8);
+
+            TextView textView9 = new TextView(this);
+            textView9.setText("Джерри Уэст, баскетбол");
+            ImageView imageView9 = new ImageView(this);
+            imageView9.setImageResource(R.drawable.west);
+            layout.addView(textView9);
+            layout.addView(imageView9);
+
+            TextView textView10 = new TextView(this);
+            textView10.setText("Сергей Белов, баскетбол");
+            ImageView imageView10 = new ImageView(this);
+            imageView10.setImageResource(R.drawable.belov);
+            layout.addView(textView10);
+            layout.addView(imageView10);
+
+        }
+
+        View bz3 = findViewById(R.id.f_pl);
+        bz3.setVisibility(View.VISIBLE);
+    }
+
+    public void onClick7(View view) {//gallery
+        allclose();
+        LinearLayout layout = (LinearLayout) findViewById(R.id.lin_f_pl);
+        layout.removeAllViews();
+        if (sportselect == 1){
+
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.drawable.f1);
+            layout.addView(imageView);
+
+            ImageView imageView2 = new ImageView(this);
+            imageView2.setImageResource(R.drawable.f2);
+            layout.addView(imageView2);
+
+            ImageView imageView3 = new ImageView(this);
+            imageView3.setImageResource(R.drawable.f3);
+            layout.addView(imageView3);
+
+            ImageView imageView4 = new ImageView(this);
+            imageView4.setImageResource(R.drawable.f4);
+            layout.addView(imageView4);
+
+            ImageView imageView5 = new ImageView(this);
+            imageView5.setImageResource(R.drawable.f5);
+            layout.addView(imageView5);
+
+            ImageView imageView6 = new ImageView(this);
+            imageView6.setImageResource(R.drawable.f6);
+            layout.addView(imageView6);
+
+            ImageView imageView7 = new ImageView(this);
+            imageView7.setImageResource(R.drawable.f7);
+            layout.addView(imageView7);
+
+            ImageView imageView8 = new ImageView(this);
+            imageView8.setImageResource(R.drawable.f8);
+            layout.addView(imageView8);
+
+            ImageView imageView9 = new ImageView(this);
+            imageView9.setImageResource(R.drawable.f9);
+            layout.addView(imageView9);
+
+            ImageView imageView10 = new ImageView(this);
+            imageView10.setImageResource(R.drawable.f10);
+            layout.addView(imageView10);
+
+        }
+
+        if (sportselect == 2){
+
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.drawable.b1);
+            layout.addView(imageView);
+
+            ImageView imageView2 = new ImageView(this);
+            imageView2.setImageResource(R.drawable.b2);
+            layout.addView(imageView2);
+
+            ImageView imageView3 = new ImageView(this);
+            imageView3.setImageResource(R.drawable.b3);
+            layout.addView(imageView3);
+
+            ImageView imageView4 = new ImageView(this);
+            imageView4.setImageResource(R.drawable.b4);
+            layout.addView(imageView4);
+
+            ImageView imageView5 = new ImageView(this);
+            imageView5.setImageResource(R.drawable.b5);
+            layout.addView(imageView5);
+
+            ImageView imageView6 = new ImageView(this);
+            imageView6.setImageResource(R.drawable.b6);
+            layout.addView(imageView6);
+
+            ImageView imageView7 = new ImageView(this);
+            imageView7.setImageResource(R.drawable.b7);
+            layout.addView(imageView7);
+
+            ImageView imageView8 = new ImageView(this);
+            imageView8.setImageResource(R.drawable.b8);
+            layout.addView(imageView8);
+
+            ImageView imageView9 = new ImageView(this);
+            imageView9.setImageResource(R.drawable.b9);
+            layout.addView(imageView9);
+
+            ImageView imageView10 = new ImageView(this);
+            imageView10.setImageResource(R.drawable.b10);
+            layout.addView(imageView10);
+
+        }
+
+        View bz3 = findViewById(R.id.f_pl);
+        bz3.setVisibility(View.VISIBLE);
+    }
+
+    public void onClick8(View view) {//back
+        allclose();
+        View bz = findViewById(R.id.main_menu);
+        bz.setVisibility(View.GONE);
+
+        View bz2 = findViewById(R.id.menu);
+        bz2.setVisibility(View.VISIBLE);
+    }
+
+    public void mainrun() {
+        View bz2 = findViewById(R.id.menu);
+        bz2.setVisibility(View.GONE);
+
+        View bz = findViewById(R.id.main_menu);
+        bz.setVisibility(View.VISIBLE);
+
+        allclose();
+
+        if (sportselect==1) {
+            TextView textViewm = findViewById(R.id.text_rules);
+            textViewm.setText(rules_f);
+        }
+
+        if (sportselect==2) {
+            TextView textViewm = findViewById(R.id.text_rules);
+            textViewm.setText(rules_b);
+        }
+            View bz3 = findViewById(R.id.rules_f);
+            bz3.setVisibility(View.VISIBLE);
+
+        ScrollView scroll = (ScrollView) findViewById(R.id.rules_f);
+        scroll.setFocusableInTouchMode(true);
+        scroll.fullScroll(View.FOCUS_UP);
+
+    }
+
+
+    public void allclose() {
+
+       View bz2 = findViewById(R.id.rules_f);
+       bz2.setVisibility(View.GONE);
+
+      View bz3 = findViewById(R.id.f_pl);
+       bz3.setVisibility(View.GONE);
+
+        ScrollView scroll = (ScrollView) findViewById(R.id.rules_f);
+        scroll.setFocusableInTouchMode(true);
+        scroll.fullScroll(View.FOCUS_UP);
+
+        ScrollView scroll2 = (ScrollView) findViewById(R.id.f_pl);
+        scroll2.setFocusableInTouchMode(true);
+        scroll2.fullScroll(View.FOCUS_UP);
+    }
+}
